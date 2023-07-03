@@ -14,23 +14,21 @@ import subprocess
 import time
 import signal
 
-
 os.chdir(os.getcwd()+'/jpm_module_1')
 
-process = subprocess.Popen(['python', 'server3.py'], cwd=os.getcwd())
+process = subprocess.Popen(['python', 'server3.py'], cwd=os.getcwd(), preexec_fn=os.getpid)
 
 time.sleep(.300)
 
+process2 = subprocess.Popen(['python', 'client3.py'], cwd=os.getcwd(), preexec_fn=os .getpid)
+process2.wait()
+os.killpg(os.getpgid(process.pid), signal.SIGTERM)
 
-#process2 = subprocess.Popen(['python', 'client3.py'], cwd=os.getcwd())
-#process2.wait()
-os.kill(process.pid, signal.SIGTERM)
-
-# FOR BONUS TASK 
+# FOR BONUS TASK
 # IF YOU WANT TO DO IT THEN UNCOMMENT THE CODE BELOW
 # Comments are anything that's preceded with '#'
 # TO UNCOMMENT JUST REMOVE THE '#'
 
 #print("UNIT TEST RESULTS BELOW...")
-process2 = subprocess.Popen(['python', 'client_test.py'], cwd=os.getcwd() )
-process2.wait();
+#process2 = subprocess.Popen(['python', #'client_test.py'], cwd=os.getcwd(), #preexec_fn=os.getpid)
+#process2.wait()
